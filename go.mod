@@ -1,4 +1,4 @@
-module main
+module blockchain-prototype
 
 go 1.23.0
 
