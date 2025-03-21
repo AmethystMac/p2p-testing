@@ -37,17 +37,21 @@ func CreateNode(port int) (host.Host, error) {
 		return nil, err
 	}
 
+	fmt.Printf("\nNode has been created with ID: %s", node.ID())
+
 	return node, err
 }
 
 
 func CreateNewStreamWithNode(node host.Host, protocol protocol.ID) {
 	node.SetStreamHandler("/chat/1.0.0", stream.ChatProtocolHandler)
+
+	fmt.Printf("\nNew stream has been created for protocol: %s", protocol)
 }
 
-func ConnectNodeToStream(node host.Host, destination string, protocol protocol.ID) (*bufio.ReadWriter, error) {
+func ConnectNodeToStream(node host.Host, target string, protocol protocol.ID) (*bufio.ReadWriter, error) {
 
-	maddr, err := multiaddr.NewMultiaddr(destination)
+	maddr, err := multiaddr.NewMultiaddr(target)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -66,7 +70,11 @@ func ConnectNodeToStream(node host.Host, destination string, protocol protocol.I
 		return nil, err
 	}
 
+	fmt.Println("\nNode has been connected to stream.")
+
 	readWriter := bufio.NewReadWriter(bufio.NewReader(streamRef), bufio.NewWriter(streamRef))
+	
+	fmt.Print("\nConnected to a peer. Type and press [Enter] to send.\n\n")
 
 	return readWriter, nil
 }
