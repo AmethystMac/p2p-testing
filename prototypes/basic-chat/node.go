@@ -1,4 +1,4 @@
-package p2p
+package main
 
 import (
 	"bufio"
@@ -6,8 +6,6 @@ import (
 	"crypto/rand"
 	"fmt"
 	"log"
-
-	"blockchain-prototype/stream"
 
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p/core/crypto"
@@ -44,7 +42,7 @@ func CreateNode(port int) (host.Host, error) {
 
 
 func CreateNewStreamWithNode(node host.Host, protocol protocol.ID) {
-	node.SetStreamHandler("/chat/1.0.0", stream.ChatProtocolHandler)
+	node.SetStreamHandler(protocol, ChatProtocolHandler)
 
 	fmt.Printf("\nNew stream has been created for protocol: %s", protocol)
 }

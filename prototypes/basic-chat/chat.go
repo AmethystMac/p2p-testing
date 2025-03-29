@@ -1,4 +1,4 @@
-package stream
+package main
 
 import (
 	"bufio"
@@ -12,7 +12,7 @@ import (
 
 const ChatProtocolId protocol.ID = "/chat/1.0.0"
 
-func ChatProtocolHandler(streamRef network.Stream)  {
+func ChatProtocolHandler(streamRef network.Stream) {
 
 	readWriter := bufio.NewReadWriter(bufio.NewReader(streamRef), bufio.NewWriter(streamRef))
 
