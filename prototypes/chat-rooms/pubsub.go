@@ -60,7 +60,7 @@ func (ps *pubsub) PublishToTopic(topic *p2p_pubsub.Topic) {
 	cmdLine := bufio.NewReader(os.Stdin)
 
 	for {
-		fmt.Print("\n> ")
+		fmt.Print("> ")
 		input, err := cmdLine.ReadString('\n')
 		if err != nil {
 			log.Panicln(err)

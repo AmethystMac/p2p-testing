@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strconv"
 	"sync"
 
 	dht "github.com/libp2p/go-libp2p-kad-dht"
@@ -47,16 +48,17 @@ func InitializeDHT(ctx context.Context, node host.Host) *dht.IpfsDHT {
 	return kademliaDHT
 }
 
-// Connect the [node] to the chat room
+// Connect the [node] to the chatroom
 func ConnectToBootstrapNodes(ctx context.Context, node host.Host, chatRoomName string) {
 
 	kademliaDHT := InitializeDHT(ctx, node)
 
-	// Announce ourselves and find peers using bootstrap peers to join the chat room
+	// Announce ourselves and find peers using bootstrap peers to join the chatroom
 	routeDiscovery := routing.NewRoutingDiscovery(kademliaDHT)
 	util.Advertise(ctx, routeDiscovery, chatRoomName)
 
 	peersFound := false
+	logs, _ := strconv.ParseBool(GetConfig("logs"))
 	for !peersFound {
 		roomPeers, err := routeDiscovery.FindPeers(ctx, chatRoomName)
 		if err != nil {
@@ -68,7 +70,9 @@ func ConnectToBootstrapNodes(ctx context.Context, node host.Host, chatRoomName s
 			}
 			err := node.Connect(ctx, peer)
 			if err != nil {
-				fmt.Printf("Node cannot connect to %s\n", peer.ID)
+				if logs {
+					fmt.Printf("Node cannot connect to %s\n", peer.ID)
+				}
 			} else {
 				fmt.Printf("Node connected to %s\n", peer.ID)
 				peersFound = true
