@@ -60,7 +60,7 @@ func (ps *Pubsub) ReadFromTopic(topic *p2p_pubsub.Topic) {
 		}
 		
 		if message.ReceivedFrom != ps.nodeId {
-			fmt.Printf("%s: %s> ", json_decode.SenderID, json_decode.Content)
+			fmt.Printf("%s < : %s> ", json_decode.SenderID, json_decode.Content)
 		}
 	}
 }
@@ -75,6 +75,8 @@ func (ps *Pubsub) PublishToTopic(topic *p2p_pubsub.Topic) {
 	if userName != "" {
 		senderId = userName
 	}
+
+	WaitForProcess("dht")
 
 	for {
 		fmt.Print("> ")

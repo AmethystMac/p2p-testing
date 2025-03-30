@@ -11,7 +11,7 @@ func main() {
 
 	ctx := context.Background()
 
-	fmt.Print("\n\nWELCOME TO P2P CHAT APPLICATION 2.0\n\n")
+	fmt.Print("\n\nWELCOME TO P2P CHAT APPLICATION 2.2\n\n")
 	
 	HandleFlags()
 

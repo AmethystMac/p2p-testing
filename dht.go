@@ -59,6 +59,9 @@ func ConnectToBootstrapNodes(ctx context.Context, node host.Host, chatRoomName s
 
 	peersFound := false
 	logs, _ := strconv.ParseBool(GetConfig("logs"))
+
+	SetProcessStatus("dht", "started")
+	fmt.Println("Searching for peers...")
 	for !peersFound {
 		roomPeers, err := routeDiscovery.FindPeers(ctx, chatRoomName)
 		if err != nil {
@@ -79,5 +82,6 @@ func ConnectToBootstrapNodes(ctx context.Context, node host.Host, chatRoomName s
 			}
 		}
 	}
-	fmt.Println("Peer discovery complete")
+	fmt.Println("Peer discovery complete.")
+	SetProcessStatus("dht", "done")
 }
